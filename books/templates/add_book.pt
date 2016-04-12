@@ -9,4 +9,9 @@
     </p>
     </form>
   </div>
+  <div metal:fill-slot="tail-more">
+    <script>
+      $('#isbn').focus();
+    </script>
+  </div>
 </div>

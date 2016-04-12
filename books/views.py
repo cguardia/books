@@ -69,6 +69,8 @@ def prepare_add_book(context, request):
     if isbn:
         if isbnlib.notisbn(isbn):
             request.session.flash('Not a valid ISBN: %s.' % isbn, 'danger')
+        elif isbn in context:
+            request.session.flash('ISBN already exists: %s.' % isbn, 'danger')
         else:
             metadata = isbnlib.meta(isbn)
             if metadata:
