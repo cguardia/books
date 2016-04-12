@@ -5,6 +5,6 @@ This is a demo application for the SubstanceD web framework. To try it out::
 
     $ virtualenv .
     $ bin/python setup.py develop
-    $ bin/pserve etc/development.ini
+    $ bin/pserve development.ini
 
 Then go to http://localhost:6543/manage and login with admin/admin.

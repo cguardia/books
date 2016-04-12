@@ -5,11 +5,12 @@
 .coverage
 .tox/
 nosetests.xml
+blobs/
 build/
 dist/
 bin/
 lib/
+local/
 include/
 env*/
-Data.fs*
-kuiuecomm/populate/assets/images/products/*
+*.fs*
