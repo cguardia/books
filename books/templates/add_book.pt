@@ -1,0 +1,12 @@
+<div metal:use-macro="request.sdiapi.main_template">
+  <div metal:fill-slot="main">
+    <h3>Add Book by ISBN</h3>
+    <form method="POST" action="" id="add-book-form" class="deform">
+    <h5>Enter ISBN for book:</h5>
+    <p>
+      <input type="text" name="isbn" id="isbn" size="13" />
+      <input type="submit" class="btn btn-primary" value="Fetch Book Data" name="fetch" />
+    </p>
+    </form>
+  </div>
+</div>

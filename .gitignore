@@ -1,0 +1,15 @@
+*.egg
+*.egg-info
+*.pyc
+*~
+.coverage
+.tox/
+nosetests.xml
+build/
+dist/
+bin/
+lib/
+include/
+env*/
+Data.fs*
+kuiuecomm/populate/assets/images/products/*
