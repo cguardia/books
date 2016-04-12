@@ -2,9 +2,6 @@
 *.egg-info
 *.pyc
 *~
-.coverage
-.tox/
-nosetests.xml
 blobs/
 build/
 dist/
@@ -12,5 +9,4 @@ bin/
 lib/
 local/
 include/
-env*/
 *.fs*
