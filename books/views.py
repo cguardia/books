@@ -68,7 +68,7 @@ def prepare_add_book(context, request):
     isbn = request.POST.get('isbn', '')
     if isbn:
         if isbnlib.notisbn(isbn):
-            request.session.flash('Not a valid ISBN: %s.' % isbn, 'error')
+            request.session.flash('Not a valid ISBN: %s.' % isbn, 'danger')
         else:
             metadata = isbnlib.meta(isbn)
             if metadata:
@@ -87,7 +87,7 @@ def prepare_add_book(context, request):
                 context[isbn] = book
                 request.session.flash('Added book with ISBN: %s.' % isbn, 'success')
             else:
-                request.session.flash('No data exists for ISBN: %s.' % isbn, 'success')
+                request.session.flash('No data exists for ISBN: %s.' % isbn, 'danger')
         return HTTPFound(request.sdiapi.mgmt_path(context, '@@contents'))
     else:
         return {}
