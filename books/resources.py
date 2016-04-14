@@ -1,3 +1,7 @@
+"""
+This module has the definitions for our content types. We define a book
+folder, for storing books, and the book itself.
+"""
 import colander
 
 from persistent import Persistent
@@ -13,7 +17,15 @@ from substanced.util import renamer
 
 
 def book_columns(folder, subobject, request, default_columnspec):
-
+    """
+    **SubstanceD** make it easy to add custom columns to the contents
+    listing. Here is where the extra columns are added. ``default_columnspec``
+    contains the original columns used by **SubstanceD**. In this case, we add
+    to them, but we could just as easily override them by omitting the default
+    columns in the list that we return. Here, we simply get the book field
+    values to display in the columns, but we could pass in a method to make
+    some calculations and display those instead.
+    """
     return default_columnspec + [
         {'name': 'Title',
          'value': getattr(subobject, 'title', None),
@@ -29,7 +41,13 @@ def book_columns(folder, subobject, request, default_columnspec):
          },
     ]
 
+
 def book_buttons(context, request, default_buttonspec):
+    """
+    Custom buttons can be added to the contents view as well. Original buttons
+    are passed in the ``default_buttonspec`` parameter. As with columns, we
+    have the option of not using them.
+    """
     return default_buttonspec + [
             {'type': 'single',
              'buttons': [{'id': 'fromisbn',
@@ -40,10 +58,20 @@ def book_buttons(context, request, default_buttonspec):
                           ]},
             ]
 
+
 def context_is_a_book_folder(context, request):
+    """
+    This is a simple method to allow the ``NameSchemaNode`` from
+    **SubstanceD** to detect if it shoud be in edit mode.
+    """
     return request.registry.content.istype(context, 'BookFolder')
 
+
 class BookFolderSchema(Schema):
+    """
+    **Substanced** schemas are defined using the **colander** library. Note
+    the use of ``context_is_a_book_folder`` defined above.
+    """
     name = NameSchemaNode(
         editing=context_is_a_book_folder,
         )
@@ -51,7 +79,12 @@ class BookFolderSchema(Schema):
         colander.String(),
         )
 
+
 class BookFolderPropertySheet(PropertySheet):
+    """
+    A property sheet turns a ``colander`` schema into a persistent form for
+    storing content data.
+    """
     schema = BookFolderSchema()
 
 @content(
@@ -62,7 +95,13 @@ class BookFolderPropertySheet(PropertySheet):
     buttons=book_buttons,
 )
 class BookFolder(Folder):
-
+    """
+    Once we have our schema, we can use **SubstanceD**'s ``content`` decorator
+    to define the content type. Notice how we pass in our custom columns and
+    buttons here. The icon that will be used for the content type in the
+    **SDI** is taken from **Glyphicons**. We only allow books to be added in a
+    book folder, by setting ``__sdi_addable__`` to the allowed content types.
+    """
     __sdi_addable__ = ('Book',)
     name = renamer()
 
@@ -71,14 +110,25 @@ class BookFolder(Folder):
         self.title = title
 
 def context_is_a_book(context, request):
+    """
+    This is a simple method to allow the ``NameSchemaNode`` from
+    **SubstanceD** to detect if it shoud be in edit mode.
+    """
     return request.registry.content.istype(context, 'Book')
 
 class Authors(colander.SequenceSchema):
+    """
+    A book can have multiple authors, so we use ``colander.SequenceSchema``
+    here to store them, each in their own string field.
+    """
     name = colander.SchemaNode(
         colander.String(),
         )
 
 class BookSchema(Schema):
+    """
+    This is a very simple book schema, but will be enough for the demo.
+    """
     isbn = NameSchemaNode(
         editing=context_is_a_book,
         )
@@ -96,11 +146,20 @@ class BookSchema(Schema):
         )
 
 class BookPropertySheet(PropertySheet):
+    """
+    The book property sheet.
+    """
     schema = BookSchema()
 
 def maybe_add_book(context, request):
+    """
+    Instead of using a view name for the ``add_view`` parameter of the content
+    definition. We can use a method to decide if the content can be added in
+    the current container. If iot can, we return the name of the add view.
+    """
     if request.registry.content.istype(context, 'BookFolder'):
         return 'add_book'
+
 
 @content(
     'Book',
@@ -108,6 +167,9 @@ def maybe_add_book(context, request):
     add_view=maybe_add_book,
     )
 class Book(Persistent):
+    """
+    Use the content decorator to define the book content type.
+    """
 
     isbn = renamer()
 
@@ -117,6 +179,12 @@ class Book(Persistent):
         self.publisher = publisher
         self.year = year
 
+
 def includeme(config): # pragma: no cover
+    """
+    The ``includeme`` method is called at initialization time **if** this
+    module is included using ``config.include``. We use it in this case for
+    adding the property sheets for our content types.
+    """
     config.add_propertysheet('Basic', BookFolderPropertySheet, BookFolder)
     config.add_propertysheet('Basic', BookPropertySheet, Book)
