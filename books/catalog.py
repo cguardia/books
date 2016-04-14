@@ -14,8 +14,9 @@ from substanced.catalog import (
 class BookCatalogFactory(object):
     """
     The catalog factory will be called at initialization time and will create
-    a catalog index for each book field.  We do not add an ``isbn`` field,
-    because that's the book's id and it's handled by the system catalog.
+    a catalog index for each book field, as defined in [[resources.py]]. We do
+    not add an ``isbn`` field, because that's the book's id and it's handled by
+    the system catalog.
     """
     title = Text()
     author = Field()
