@@ -32,6 +32,9 @@ def created(event):
     adding our catalog (see [[catalog.py]]).
     """
     root = event.object
+    registry = event.registry
     root.sdi_title = 'Simple Book Catalog'
     service = root['catalogs']
     service.add_catalog('books', update_indexes=True)
+    books = registry.content.create('BookFolder', name='books', title='Books')
+    root['books'] = books
