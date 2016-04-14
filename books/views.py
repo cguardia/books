@@ -38,7 +38,7 @@ class AddBookView(FormView):
     def add_success(self, appstruct):
         """
         Once the form is successfully posted, **SubstanceD** will call this
-        view's ``add_success` method, where we create the book and redirect to
+        view's ``add_success`` method, where we create the book and redirect to
         the main contents view.
         """
         registry = self.request.registry
