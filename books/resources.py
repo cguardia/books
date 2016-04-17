@@ -138,11 +138,11 @@ class BookSchema(Schema):
     author = Authors()
     publisher = colander.SchemaNode(
         colander.String(),
-        missing=colander.null,
+        missing='',
         )
     year = colander.SchemaNode(
         colander.Int(),
-        missing=colander.null,
+        missing=0,
         )
 
 class BookPropertySheet(PropertySheet):
