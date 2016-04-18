@@ -29,7 +29,8 @@ def created(event):
     """
     We use **Pyramid**'s events to register a subscriber to the ``Root``
     object's creation event. This is for setting the **SDI** title and
-    adding our catalog (see [[catalog.py]]).
+    adding our catalog (see [[catalog.py]]). Finally, a book folder is
+    added at the root, so that the application is ready to enter books.
     """
     root = event.object
     registry = event.registry

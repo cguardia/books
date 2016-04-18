@@ -89,7 +89,7 @@ def add_book_from_isbn(context, request):
     """
     This is a view that will be called when the button for adding books using
     their ISBN is clicked from the contents view. It uses ``isbnlib`` to query
-    some book databases and fetch the metadata if the ISBN exists. One we have
+    some book databases and fetch the metadata if the ISBN exists. Once we have
     the metadata, we create a new book and redirect to the contents view.
     """
     isbn = request.POST.get('isbn', '')

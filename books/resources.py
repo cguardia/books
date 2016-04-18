@@ -24,7 +24,7 @@ def book_columns(folder, subobject, request, default_columnspec):
     to them, but we could just as easily override them by omitting the default
     columns in the list that we return. Here, we simply get the book field
     values to display in the columns, but we could pass in a method to make
-    some calculations and display those instead.
+    some calculations and display the results of those instead.
     """
     return default_columnspec + [
         {'name': 'Title',
@@ -127,7 +127,8 @@ class Authors(colander.SequenceSchema):
 
 class BookSchema(Schema):
     """
-    This is a very simple book schema, but will be enough for the demo.
+    This is a very simple book schema, but will be enough for the demo. Note
+    how the ``Authors`` field we created above is used.
     """
     isbn = NameSchemaNode(
         editing=context_is_a_book,
@@ -155,7 +156,7 @@ def maybe_add_book(context, request):
     """
     Instead of using a view name for the ``add_view`` parameter of the content
     definition. We can use a method to decide if the content can be added in
-    the current container. If iot can, we return the name of the add view.
+    the current container. If it can, we return the name of the add view.
     """
     if request.registry.content.istype(context, 'BookFolder'):
         return 'add_book'

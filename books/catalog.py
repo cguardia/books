@@ -58,7 +58,9 @@ class BookCatalogViews(object):
         """
         Index views are overridable. We take advantage of this by creating our
         own text view for the system catalog, so that the filter search box in
-        the **SDI** will use all the book's fields for searching.
+        the **SDI** will use all the book's fields for searching. Note how we
+        override ``catalog_name`` from ``indexview_defaults`` to use the
+        ``system`` catalog.
         """
         isbn = getattr(self.resource, 'isbn', '')
         title = getattr(self.resource, 'title', '')
